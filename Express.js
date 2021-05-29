@@ -2,6 +2,8 @@
 
 const express = require("express");
 const path = require("path");
+const fs = require("fs");
+const uniqid = require("uniqid");
 
 // Sets up the Express App
 
@@ -16,7 +18,9 @@ app.use(express.static("public"));
 
 //tables (DATA)
 
-const noteList = [];
+let noteList = require("./db/db.json");
+
+// let student = JSON.parse(rawdata);
 
 // Routes
 
@@ -36,9 +40,7 @@ router.post("/api/notes", (req, res) => {
   // req.body hosts is equal to the JSON post sent from the user
   // This works because of our body parsing middleware
   const newNote = req.body;
-
-  // Using a RegEx Pattern to remove spaces from newCharacter
-  // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
+  newNote.id = uniqid();
   console.log(newNote);
 
   noteList.push(newNote);
